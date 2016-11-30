@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Agency - Start Bootstrap Theme</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Theme CSS -->
+    <link href="css/agency.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+<script src="vendor/jquery/jquery.min.js"></script>
+
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">Welcome To Movie DataBase</div>
+                <div class="intro-heading">It's Nice To Meet You</div>
+                <a href="#services" id="display" class="page-scroll btn btn-xl"> Lumos Maxima[Click Me !!]</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div  class="row text-center">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Vast Movie Database</h2>
+                    <div >
+                        <table class="table" align="center"  id="movielist"  style="width:100%; display:none" >
+                            <h1>Movie List</h1>
+                            <thread >
+                                <tr align="center" >
+                                    <th >ID</th>
+                                <th >Category</th>
+                                <th >Film</th>
+                                <th >Director</th>
+                                <th >Leading_Actors</th>
+                                <th >Year</th>
+                                <th >Country</th>
+                                </tr>
+                            </thread>
+                        </table>
+                    </div>
+                    <script >
+
+                        $(document).ready(function() {
+
+                            $("#display").click(function () {
+                                //alert("hi");
+                                $("#display").hide()
+                                $("#movielist").css("display","block")
+                                $.get("/movie", function (data) {
+                                    console.log(data);
+                                    $.each(new Array(100), function (i) {
+                                        console.log(data[i]);
+                                        iteration(i, data[i].Film);
+
+                                    });
+
+                                })
+                                function iteration(i, value) {
+                                    setTimeout(function () {
+                                        var rownum = i + 1;
+                                        var add_row = '<tr>';
+                                        $.get("/movie/" + value, function (data) {
+                                            add_row= add_row+'<td >'+rownum +'</td >'
+                                            $.each(data, function (key, value) {
+                                                add_row = add_row + '<td >'+ value + '</td>'
+
+                                            })
+
+                                            t= $("#movielist tr").length
+                                            add_row = add_row + '</tr>'
+                                            $("#movielist").append(add_row);
+                                            $("#movielist tr:eq("+t+")").hide()
+                                            $("#movielist tr:eq("+t+")").fadeToggle()
+
+
+                                            var rowCount = $('#movielist tr').length;
+                                            if (rowCount > 20)
+                                                $("#movielist tr:eq(1)").remove();
+                                        })
+                                    }, 500*i)
+                                }
+                            })
+                        })
+                    </script>
+                </div>
+            </div>
+            <div class="row text-center">
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Clients Aside -->
+    <aside class="bg-light-gray" >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <a href="#">
+                        <h1 class="large text-muted"> GitHub </h1><img src="img/logos/github-256.png" class="img-responsive img-centered" alt="">
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="#">
+                        <h1 class="large text-muted"> MOngoDB </h1><img src="img/logos/mongodb.png" class="img-responsive img-centered" alt="">
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="#">
+                        <h1 class="large text-muted"> JQuery </h1><img src="img/logos/icon-jquery.png" class="img-responsive img-centered" alt="">
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <a href="#">
+                        <h1 class="large text-muted"> Heroku </h1> <img src="img/logos/Heroku-01.png" class="img-responsive img-centered" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright &copy; Abhishek Jain 2016</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li><a href="#">NodeJs</a>
+                        </li>
+                        <li><a href="#">MongoDB</a>
+                        </li>
+                        <li><a href="#">Github</a>
+                        </li>
+                        <li><a href="#">JQuery</a>
+                        </li>
+                        <li><a href="#">BootStrap</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- jQuery -->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/agency.min.js"></script>
+
+
+</body>
+
+</html>

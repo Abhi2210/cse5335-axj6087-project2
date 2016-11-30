@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- If IE use the latest rendering engine -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Set the page to the width of the device and set the zoon level -->
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <title>Movie Database</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <style>
+        .jumbotron{
+            background-color:#2E2D88;
+            color:white;
+        }
+        /* Adds borders for tabs */
+        .tab-content {
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+        }
+        .nav-tabs {
+            margin-bottom: 0;
+        }
+    </style>
+
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+<script>
+
+    $(document).ready(function() {
+        $("#display").click(function () {
+            $.get("/movie", function (data) {
+                console.log(data);
+                $.each(new Array(142), function (i) {
+                    console.log(data[i]);
+                    iteration(i, data[i].Film);
+
+                });
+
+            })
+            function iteration(i, value) {
+                setTimeout(function () {
+                    var rownum = i + 1;
+                    var add_row = '<tr>';
+                    $.get("/movie/" + value, function (data) {
+                        $.each(data, function (key, value) {
+                            add_row = add_row + '<td >' + value + '</td>'
+
+                        })
+
+
+                        add_row = add_row + '</tr>'
+                        $("#movielist").append(add_row);
+                        var rowCount = $('#movielist tr').length;
+                        if (rowCount > 20)
+                            $("#movielist tr:eq(1)").remove();
+                    })
+                }, 500*i)
+            }
+        })
+    })
+
+</script>
+<div class="container">
+
+<div>
+    <button type="button" id="display">executer</button>
+</div>
+
+
+<div>
+    <table class="table" id="movielist"  style = "border: 1px black solid">
+        <h1>Movie List</h1>
+        <thread>
+
+            <th>Category</th>
+            <th>Film</th>
+            <th>Director</th>
+            <th>Leading_Actors</th>
+            <th>Year</th>
+            <th>Country</th>
+            </tr>
+        </thread>
+    </table>
+</div>
+</div>
+
+
+</body>
+</html>
+
