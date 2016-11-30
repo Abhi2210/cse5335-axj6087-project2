@@ -1,11 +1,8 @@
 # cse5335-axj6087-project2
 
 Name : Abhishek Jain
-
 UTA Id : 1001246087
-
 Email : abhishek.jain2@mavs.uta.edu
-
 Website : https://cse5335-axj6087-project2.herokuapp.com/
 
 
