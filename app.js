@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 var cors = require("cors");
 
-mongoose.connect("mongodb://abhi22:tutu22@ds143717.mlab.com:43717/heroku_p192hvf2");
+mongoose.connect("mongodb://link");
 
 var db_schema = new mongoose.Schema({
     Category : String,
